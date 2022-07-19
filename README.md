@@ -12,7 +12,7 @@ Social Unified Credit Code 简写 为 SUCC，
 
 ### 安装 
 ```sh
-pip install https://github.com/somenzz/social_unified_creditcode.git
+pip install git+https://github.com/somenzz/social_unified_creditcode.git
 ```
 
 ### 使用
