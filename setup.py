@@ -25,7 +25,7 @@ KEYWORDS = "social unified credit code, 统一社会信用代码校验，生成"
 AUTHOR = "somenzz"
 AUTHOR_EMAIL = "somenzz@163.com"
 URL = "https://github.com/somenzz/social_unified_creditcode"
-LICENSE = license.read_text()
+LICENSE = license.read_text(encoding="utf-8")
 PACKAGES = find_packages(exclude=["tests", "test.*"])
 print(PACKAGES)
 
@@ -62,7 +62,7 @@ params = {
     "tests_require": TESTS_REQUIRE,
     "test_suite": TEST_SUITE,
     "classifiers": CLASSIFIERS,
-    "long_description": readme.read_text(),
+    "long_description": readme.read_text(encoding="utf-8"),
 }
 
 if __name__ == "__main__":
