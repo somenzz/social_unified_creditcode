@@ -84,19 +84,31 @@ ORGANIZATION_CHECK_CODE_DICT = {
 class CreditIdentifier(object):
     @staticmethod
     def get_random_address():
-        with open(Path(__file__).parent / "address.json") as reader:
+        with open(Path(__file__).parent / "address.json", encoding='utf-8') as reader:
             address = json.load(reader)
         nums_province = len(address)
+        #需要考虑“不设区的地级市”出现nums_area == 0 的情况
+        #不设市辖区、不管县市这样城市统称为“直筒子市”,这样城市全国一共有5个：广东省东莞市、中山市，海南省三沙市、儋州市、甘肃省嘉峪关市。 这5座城市直接下辖乡、镇、街道。
+        #e.g.    {
+        #        "name": "东莞市",
+        #        "code": "441900",
+        #        "child": []
+        #    },
         province = address[random.randint(0, nums_province - 1)]
         nums_city = len(province["child"])
         city = province["child"][random.randint(0, nums_city - 1)]
         areas = city["child"]
         nums_area = len(areas)
-        area = areas[random.randint(0, nums_area - 1)]
-        address_name = f"{province['name']}{city['name']}{area['name']}"
-        address_code = area["code"]
-        return {"name": address_name, "code": address_code}
-
+        if nums_area != 0:
+            area = areas[random.randint(0, nums_area - 1)]
+            address_name = f"{province['name']}{city['name']}{area['name']}"
+            address_code = area["code"]
+            return {"name": address_name, "code": address_code}
+        else:
+            address_name = f"{province['name']}{city['name']}"
+            address_code = city["code"]
+            return {"name": address_name, "code": address_code}
+            
     def CreateC9(self, code):
         # 第i位置上的加权因子
         weighting_factor = [3, 7, 9, 10, 5, 8, 4, 2]
